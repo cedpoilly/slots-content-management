@@ -3,9 +3,8 @@ class FlipCard extends HTMLElement {
     super();
 
     this.attachShadow({ mode: "open" });
-  }
 
-  static style = /* css */ `
+    this.styleString = /* css */ `
     *,
     *::before,
     *::after {
@@ -19,7 +18,7 @@ class FlipCard extends HTMLElement {
       width: 100%;
       display: block;
       --card-width: 15rem;
-      --card-hegiht: 25rem;
+      --card-height: 25rem;
 
       --transition: transform 0.3s ease-in-out;
 
@@ -35,6 +34,7 @@ class FlipCard extends HTMLElement {
       font-family: var(--font-family);
       width: var(--card-width, 15rem);
       height: var(--card-height);
+      margin: auto;
     }
 
     .card__content {
@@ -91,7 +91,7 @@ class FlipCard extends HTMLElement {
     }
 `;
 
-  static template = /* html */ `
+    this.template = /* html */ `
   <template id="flipcard-template">
     <div class="card">
       <div class="card__content">
@@ -100,6 +100,7 @@ class FlipCard extends HTMLElement {
       </div>
     </div>
   </template>`;
+  }
 
   connectedCallback() {
     this.setStyles();
@@ -108,14 +109,14 @@ class FlipCard extends HTMLElement {
 
   setStyles() {
     const styleTag = document.createElement("style");
-    styleTag.innerHTML = FlipCard.style;
+    styleTag.innerHTML = this.styleString;
     this.shadowRoot.appendChild(styleTag);
   }
 
   setMarkup() {
     const fragment = document
       .createRange()
-      .createContextualFragment(FlipCard.template);
+      .createContextualFragment(this.template);
 
     const html = fragment
       .querySelector("#flipcard-template")
