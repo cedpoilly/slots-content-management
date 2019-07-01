@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <title>Slots Content Management</title>
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        display: grid;
+        place-content: center;
+        height: 100vh;
+      }
+    </style>
+
+    <style class="slots-content-handling">
+      [data-masked] {
+        opacity: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <style>
+      .card-grid {
+        display: grid;
+        place-content: center;
+        height: 100vh;
+        width: 95vw;
+
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+
+      ul li {
+        list-style: none;
+        margin-top: 0.5rem;
+        font-weight: 600;
+      }
+    </style>
+
+    <style>
+      .cedric {
+        --transition: transform 0.35s ease-in;
+        --front-background: #00395f;
+        --back-background: #ced;
+        --card-height: 23rem;
+        --front-color: #ddd;
+      }
+    </style>
+
+    <style>
+      .sandeep {
+        --transition: transform 0.35s ease-in;
+        --front-background: #017acac0;
+        --back-background: rgb(238, 204, 204);
+        --card-height: 23rem;
+      }
+    </style>
+
+    <style>
+      .james {
+        --transition: transform 0.35s ease-in;
+        --front-background: #ca0101c0;
+        --front-color: #000;
+        --back-background: rgb(109, 0, 0);
+        --back-color: rgb(255, 109, 109);
+        --card-height: 23rem;
+      }
+    </style>
+
+    <div class="card-grid">
+      <my-flipcard class="cedric" data-masked>
+        <div slot="front">
+          <header>
+            <h1>@cedpoilly</h1>
+            <h2>Job: <span>Developer</span></h2>
+          </header>
+        </div>
+        <div slot="back">
+          <h1>Languages</h1>
+          <ul>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+          </ul>
+        </div>
+      </my-flipcard>
+
+      <my-flipcard class="sandeep" data-masked>
+        <div slot="front">
+          <header>
+            <h1>@__Sun__</h1>
+            <h2>Job: <span>Developer</span></h2>
+          </header>
+        </div>
+        <div slot="back">
+          <h1>Languages</h1>
+          <ul>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+          </ul>
+        </div>
+      </my-flipcard>
+
+      <my-flipcard class="james" data-masked>
+        <div slot="front">
+          <h1>Welcome to Front-End Coders Meetup!</h1>
+        </div>
+        <div slot="back">
+          <h1>Hope you had a great time!</h1>
+          <h2>See you soon ✌🏽</h2>
+        </div>
+      </my-flipcard>
+    </div>
+
+    <script type="module">
+      const attributeName = "data-masked";
+      const elementName = "my-flipcard";
+
+      unveilCE(elementName, attributeName);
+
+      function unveilCE(elementName, attributeName = "data-masked") {
+        const maskedElements = [
+          ...document.querySelectorAll(`[${attributeName}]`)
+        ];
+
+        window.customElements.whenDefined(elementName).then(() => {
+          const flipcards = document.querySelectorAll(elementName);
+          [...flipcards].map(element => {
+            element.removeAttribute(attributeName);
+          });
+        });
+      }
+    </script>
+    <script type="module">
+      setTimeout(() => {
+        const script = document.createElement("script");
+        script.src = "./my-flipcard.js";
+        const body = document.querySelector("body");
+        body.appendChild(script);
+      }, 3000);
+    </script>
+  </body>
+</html>
